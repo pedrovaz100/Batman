@@ -1,19 +1,28 @@
-# Batman Premium Landing Page
+# 🦇 Batman Premium Landing Page
 
-Projeto em HTML, CSS e JavaScript puro.
+Uma landing page inspirada no universo do Batman, criada com **HTML, CSS e JavaScript puro**, com foco em uma experiência **cinematográfica**, **dark premium** e totalmente **responsiva**.
 
-## Como executar
-Basta abrir o arquivo `index.html` no navegador.
+---
 
-## Estrutura
-- `index.html` → página completa
-- sem dependências externas
-- totalmente responsivo
+## ✨ Visão Geral
 
-## Recursos incluídos
-- loader inicial
-- menu mobile funcional
-- hero cinematográfico
-- efeitos de chuva, partículas e skyline
-- cards animados
-- visual dark premium inspirado em Gotham
+O projeto foi desenvolvido para entregar uma interface moderna e impactante, inspirada em **Gotham City**, com elementos visuais sombrios, efeitos sutis e uma estética digna de portfólio.
+
+A proposta combina:
+
+- visual dark sofisticado
+- atmosfera urbana e tecnológica
+- animações suaves
+- composição cinematográfica
+- experiência responsiva para diferentes dispositivos
+
+---
+
+## 🚀 Como executar
+
+Não é necessário instalar nenhuma dependência.
+
+Basta abrir o arquivo abaixo no navegador:
+
+```bash
+index.html
