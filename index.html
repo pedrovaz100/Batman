@@ -3,882 +3,969 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Batman | Gotham Protocol</title>
-  <meta name="description" content="Landing page premium inspirada no universo do Batman." />
+  <title>Batman Premium Landing Page</title>
+  <meta name="description" content="Landing page premium do Batman com visual cinematográfico, responsivo e efeitos em HTML, CSS e JavaScript puro." />
   <style>
-    :root{
-      --bg:#05070c;
-      --bg2:#0a1020;
-      --panel:rgba(255,255,255,.06);
-      --line:rgba(255,255,255,.10);
-      --text:#f5f7fb;
-      --muted:rgba(255,255,255,.66);
-      --gold:#facc15;
-      --gold2:#ffd95a;
-      --blue:#2247ff;
-      --shadow:0 20px 60px rgba(0,0,0,.35);
-      --radius:28px;
-      --container:min(1200px, calc(100vw - 32px));
-    }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter,Segoe UI,Arial,sans-serif;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at top, rgba(34,71,255,.18), transparent 28%),
-        radial-gradient(circle at 75% 20%, rgba(250,204,21,.08), transparent 18%),
-        linear-gradient(180deg,var(--bg),var(--bg2) 35%,var(--bg) 100%);
-      color:var(--text);
-      overflow-x:hidden;
+        radial-gradient(circle at top, rgba(255,214,10,0.08), transparent 18%),
+        linear-gradient(180deg, #07090f 0%, #0c111b 35%, #0b1422 70%, #05070c 100%);
+      color: #eef2ff;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+    button, input { font: inherit; border: none; outline: none; }
+
+    :root {
+      --bg: #07090f;
+      --bg-2: #0b1422;
+      --panel: rgba(13, 18, 30, 0.72);
+      --panel-strong: rgba(8, 12, 22, 0.88);
+      --line: rgba(255,255,255,0.08);
+      --text: #edf2ff;
+      --muted: #a6b0c6;
+      --yellow: #ffd54a;
+      --yellow-2: #ffbf1b;
+      --blue: #7dc4ff;
+      --shadow: 0 18px 50px rgba(0,0,0,0.35);
+      --shadow-strong: 0 25px 80px rgba(0,0,0,0.5);
+      --radius-xl: 32px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1220px;
+      --tr: .35s ease;
     }
 
-    .grid-bg::before{
-      content:"";
-      position:absolute; inset:0;
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--yellow);
+      font-size: .82rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: .12em;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 4.3rem);
+      line-height: 1.05;
+      margin: 18px 0 16px;
+      font-weight: 900;
+    }
+
+    .section-text {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+
+    .btn {
+      min-height: 54px;
+      padding: 0 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: transform var(--tr), box-shadow var(--tr), background var(--tr), border-color var(--tr);
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-4px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--yellow), var(--yellow-2));
+      color: #0a0e16;
+      box-shadow: 0 15px 30px rgba(255, 193, 27, 0.25);
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+      box-shadow: var(--shadow);
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+      position: relative;
+      transition: transform var(--tr), border-color var(--tr), box-shadow var(--tr);
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255,213,74,0.18);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(8px);
+      opacity: .35;
+    }
+    .glow.one {
+      width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(255,213,74,.22), transparent 65%);
+      top: -70px; left: -70px;
+    }
+    .glow.two {
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(125,196,255,.12), transparent 65%);
+      right: -120px; top: 220px;
+    }
+
+    .rain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
       background-image:
-        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-      background-size:36px 36px;
-      pointer-events:none;
-      opacity:.45;
+        linear-gradient(to bottom, rgba(125,196,255,0.0), rgba(125,196,255,0.16) 70%, rgba(125,196,255,0.0)),
+        linear-gradient(to bottom, rgba(125,196,255,0.0), rgba(125,196,255,0.12) 70%, rgba(125,196,255,0.0)),
+        linear-gradient(to bottom, rgba(125,196,255,0.0), rgba(125,196,255,0.1) 70%, rgba(125,196,255,0.0));
+      background-size: 2px 140px, 2px 180px, 1px 120px;
+      background-position: 8% -20%, 56% -40%, 82% -10%;
+      animation: rainMove 10s linear infinite;
+      opacity: .35;
+      z-index: 0;
+    }
+    @keyframes rainMove {
+      from { transform: translateY(-120px); }
+      to { transform: translateY(120px); }
     }
 
-    a{text-decoration:none;color:inherit}
-    img{max-width:100%}
-    .container{width:var(--container);margin:auto;position:relative}
-    .glass{
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:var(--shadow);
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: rgba(5,8,14,.7);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(16px);
     }
-    .gold-line{
-      width:160px;height:1px;
-      background:linear-gradient(90deg, rgba(250,204,21,0), rgba(250,204,21,.95), rgba(250,204,21,0));
-      margin-bottom:18px;
+    .header-inner {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
-    .section{padding:100px 0;position:relative}
-    .eyebrow{
-      color:var(--gold);
-      text-transform:uppercase;
-      letter-spacing:.38em;
-      font-size:.72rem;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 900;
+      letter-spacing: .03em;
     }
-    h1,h2,h3,h4{margin:0}
-    h2{
-      font-size:clamp(2rem,5vw,4rem);
-      line-height:.95;
-      text-transform:uppercase;
-      font-weight:900;
+    .logo-badge {
+      width: 52px; height: 52px;
+      border-radius: 18px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, #141922, #090c12);
+      border: 1px solid rgba(255,213,74,0.24);
+      color: var(--yellow);
+      box-shadow: 0 0 0 1px rgba(255,213,74,.08), 0 0 22px rgba(255,213,74,.08);
+      font-size: 1.35rem;
     }
-    p{margin:0}
+    .logo-text .small {
+      display: block;
+      color: var(--muted);
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+    }
+    .logo-text .big {
+      display: block;
+      font-size: 1.08rem;
+    }
+    .nav { display: flex; align-items: center; gap: 12px; }
+    .nav-list {
+      display: flex; gap: 6px; align-items: center;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-list a {
+      padding: 12px 16px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-weight: 700;
+      transition: var(--tr);
+    }
+    .nav-list a:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--yellow);
+    }
+    .menu-toggle {
+      display: none;
+      width: 52px; height: 52px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      cursor: pointer;
+    }
+    .menu-toggle span, .menu-toggle::before, .menu-toggle::after {
+      content: "";
+      position: absolute;
+      left: 50%; width: 24px; height: 3px;
+      border-radius: 999px;
+      transform: translateX(-50%);
+      background: var(--yellow);
+      transition: var(--tr);
+    }
+    .menu-toggle span { top: 24px; }
+    .menu-toggle::before { top: 16px; }
+    .menu-toggle::after { top: 32px; }
+    .mobile-panel {
+      position: fixed;
+      top: 86px; left: 16px; right: 16px;
+      padding: 14px;
+      border-radius: 28px;
+      background: rgba(8,11,18,.96);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: var(--shadow-strong);
+      display: none;
+      z-index: 998;
+    }
+    .mobile-panel.active { display: block; }
+    .mobile-panel a {
+      display: block;
+      padding: 16px 18px;
+      border-radius: 18px;
+      color: var(--text);
+      font-weight: 800;
+    }
+    .mobile-panel a:hover { background: rgba(255,255,255,0.05); color: var(--yellow); }
 
-    /* loader */
-    .loader{
-      position:fixed; inset:0; z-index:9999;
-      display:grid; place-items:center;
-      background:var(--bg);
-      transition:.7s ease;
+    .hero { padding: 38px 0 82px; position: relative; }
+    .hero-wrap {
+      min-height: calc(100vh - 120px);
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      align-items: center;
+      gap: 34px;
     }
-    .loader.hidden{opacity:0;visibility:hidden}
-    .loader-inner{text-align:center}
-    .loader-rings{
-      width:170px;height:170px;margin:auto;position:relative;display:grid;place-items:center;
+    .hero-title {
+      font-size: clamp(3rem, 7vw, 6.2rem);
+      line-height: .93;
+      font-weight: 900;
+      margin: 20px 0 22px;
+      letter-spacing: -.05em;
     }
-    .ring{
-      position:absolute; border-radius:50%;
-      border:1px solid rgba(250,204,21,.18);
-      animation:radar 2.4s ease-out infinite;
+    .hero-title span { color: var(--yellow); display: block; text-shadow: 0 0 24px rgba(255,213,74,.12); }
+    .hero-text {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 28px;
     }
-    .ring:nth-child(1){width:90px;height:90px}
-    .ring:nth-child(2){width:130px;height:130px;animation-delay:.5s}
-    .ring:nth-child(3){width:170px;height:170px;animation-delay:1s}
-    .loader p{
-      margin-top:18px;
-      color:rgba(250,204,21,.82);
-      font-size:.75rem;
-      letter-spacing:.4em;
-      text-transform:uppercase;
-    }
-    .progress{
-      width:220px;height:4px;border-radius:999px;background:rgba(255,255,255,.08);
-      margin:14px auto 0;overflow:hidden
-    }
-    .progress span{
-      display:block;height:100%;width:45%;
-      background:linear-gradient(90deg, transparent, var(--gold), transparent);
-      animation:slide 1.2s linear infinite;
-    }
-
-    /* navbar */
-    header{
-      position:fixed; top:16px; left:0; right:0; z-index:1000;
-    }
-    .nav{
-      width:var(--container);
-      margin:auto;
-      border-radius:24px;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 18px;
-      position:relative;
-    }
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand-text strong{
-      display:block;
-      text-transform:uppercase;
-      letter-spacing:.34em;
-      font-size:.82rem;
-    }
-    .brand-text span{
-      display:block;
-      color:rgba(255,255,255,.45);
-      font-size:.62rem;
-      text-transform:uppercase;
-      letter-spacing:.34em;
-      margin-top:3px;
-    }
-    .nav-links{display:flex;gap:8px;align-items:center}
-    .nav-links a{
-      padding:11px 14px;border-radius:999px;
-      color:rgba(255,255,255,.72);
-      font-size:.95rem;transition:.28s ease;
-    }
-    .nav-links a:hover,.nav-links a.active{
-      background:var(--gold);color:#0b0b0b;
-      box-shadow:0 0 24px rgba(250,204,21,.22);
-    }
-    .menu-btn{
-      display:none;background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.1);color:#fff;
-      border-radius:14px;padding:10px 12px;cursor:pointer
-    }
-    .mobile-menu{
-      display:none;
-      width:var(--container);margin:12px auto 0;padding:10px;
-      border-radius:24px;
-    }
-    .mobile-menu a{
-      display:block;padding:14px 12px;border-radius:16px;color:rgba(255,255,255,.78)
-    }
-    .mobile-menu a:hover{background:rgba(255,255,255,.06);color:var(--gold)}
-
-    /* hero */
-    .hero{
-      min-height:100vh;
-      display:flex;align-items:center;
-      padding:130px 0 70px;
-      position:relative;overflow:hidden;
-    }
-    .hero .container{
-      display:grid;grid-template-columns:1.08fr .92fr;gap:42px;align-items:center;
-      z-index:2;
-    }
-    .hero h1{
-      font-size:clamp(3rem,7vw,7rem);
-      text-transform:uppercase;
-      line-height:.92;
-      font-weight:900;
-      max-width:780px;
-    }
-    .hero h1 span{color:var(--gold)}
-    .subtitle{
-      max-width:760px;
-      color:var(--muted);
-      margin-top:22px;
-      font-size:1.08rem;
-      line-height:1.8;
-    }
-    .badge{
-      display:inline-flex;align-items:center;gap:10px;
-      border:1px solid rgba(250,204,21,.2);
-      background:rgba(250,204,21,.08);
-      color:var(--gold);
-      padding:10px 16px;border-radius:999px;
-      font-size:.72rem;text-transform:uppercase;letter-spacing:.35em;
-      margin-bottom:22px;
-    }
-    .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
-    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:12px;
-      padding:15px 22px;border-radius:999px;font-weight:700;transition:.3s ease;
-      border:1px solid transparent
-    }
-    .btn.primary{
-      background:var(--gold);color:#111;
-      box-shadow:0 0 26px rgba(250,204,21,.22);
-    }
-    .btn.primary:hover{transform:translateY(-2px) scale(1.02)}
-    .btn.secondary{
-      background:rgba(255,255,255,.05);color:#fff;border-color:rgba(255,255,255,.12)
-    }
-    .btn.secondary:hover{border-color:rgba(250,204,21,.4);color:var(--gold)}
-
-    .stats{
-      margin-top:34px;
-      display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
-      max-width:760px;
-    }
-    .stat{
-      padding:18px;border-radius:22px;text-align:center
-    }
-    .stat strong{display:block;color:var(--gold);font-size:1.8rem}
-    .stat span{
-      display:block;margin-top:6px;
-      text-transform:uppercase;letter-spacing:.24em;
-      font-size:.68rem;color:rgba(255,255,255,.48)
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 24px; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 12px; }
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      font-weight: 700;
+      color: var(--muted);
     }
 
-    .hero-panel{
-      position:relative;padding:24px;border-radius:36px;
+    .hero-visual {
+      min-height: 650px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .hero-panel::before{
-      content:"";position:absolute;inset:14% 20%;
-      background:rgba(250,204,21,.08);filter:blur(70px);border-radius:50%;z-index:-1;
-    }
-    .panel-top{
-      display:flex;justify-content:space-between;gap:20px;align-items:center;
-      border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:18px;margin-bottom:18px;
-    }
-    .panel-top p{
-      font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.45)
-    }
-    .panel-top h3{margin-top:10px;font-size:1.9rem}
-    .panel-grid{
-      display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px
-    }
-    .box{
-      background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.08);
-      border-radius:22px;padding:18px
-    }
-    .box .small{
-      text-transform:uppercase;letter-spacing:.25em;font-size:.7rem;color:rgba(255,255,255,.42)
-    }
-    .box strong{display:block;margin-top:12px;font-size:2rem}
-    .statusbar{
-      margin-top:14px;height:8px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden
-    }
-    .statusbar span{
-      display:block;height:100%;width:86%;
-      background:linear-gradient(90deg,var(--gold),#f59e0b);
-    }
-    .radar{
-      margin-top:14px;background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.08);
-      border-radius:24px;padding:18px;
-    }
-    .radar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-    .online{padding:6px 10px;border-radius:999px;font-size:.62rem;text-transform:uppercase;letter-spacing:.22em;background:rgba(16,185,129,.13);color:#86efac}
-    .radar-screen{
-      height:240px;border-radius:22px;position:relative;overflow:hidden;
+    .hero-frame {
+      position: absolute;
+      inset: 20px;
+      border-radius: 40px;
       background:
-        radial-gradient(circle, rgba(74,222,128,.1), transparent 28%),
-        linear-gradient(180deg, rgba(15,23,42,.6), rgba(2,6,23,.95));
+        radial-gradient(circle at 50% 18%, rgba(255,213,74,0.18), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: var(--shadow-strong);
+      overflow: hidden;
     }
-    .radar-screen::before,.radar-screen::after{
-      content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      border-radius:50%;border:1px solid rgba(110,231,183,.15);
-      animation:radar 2.5s linear infinite;
+    .moon {
+      position: absolute;
+      width: 170px; height: 170px;
+      border-radius: 50%;
+      top: 38px; right: 54px;
+      background: radial-gradient(circle, #ffe795 0%, #ffd54a 55%, #e3aa00 100%);
+      box-shadow: 0 0 45px rgba(255,213,74,.24);
     }
-    .radar-screen::before{width:110px;height:110px}
-    .radar-screen::after{width:200px;height:200px;animation-delay:.6s}
-    .cross-h,.cross-v{
-      position:absolute;background:rgba(110,231,183,.12)
-    }
-    .cross-h{height:1px;left:0;right:0;top:50%}
-    .cross-v{width:1px;top:0;bottom:0;left:50%}
-    .blip{position:absolute;border-radius:50%;box-shadow:0 0 18px currentColor}
-    .blip.b1{left:34%;top:30%;width:14px;height:14px;background:var(--gold);color:var(--gold)}
-    .blip.b2{left:62%;top:56%;width:11px;height:11px;background:#7dd3fc;color:#7dd3fc}
-    .blip.b3{left:47%;top:42%;width:16px;height:16px;background:#4ade80;color:#4ade80}
-
-    /* skyline + effects */
-    .hero-effects,.city,.rain,.particles{position:absolute;inset:0;pointer-events:none}
-    .city{top:auto;height:370px;bottom:0;opacity:.78}
-    .building{
-      position:absolute;bottom:0;border-radius:10px 10px 0 0;
-      background:linear-gradient(180deg, rgba(100,116,139,.18), rgba(2,6,23,.92));
-      border:1px solid rgba(255,255,255,.05);
-      box-shadow:0 0 40px rgba(0,0,0,.85);
-      overflow:hidden;
-    }
-    .windows{
-      display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px
-    }
-    .windows span{height:8px;border-radius:2px;background:rgba(148,163,184,.1)}
-    .windows span:nth-child(5n){background:rgba(250,204,21,.82);box-shadow:0 0 10px rgba(250,204,21,.88)}
-
-    .rain span{
-      position:absolute;top:-20%;width:1px;height:110px;
-      background:linear-gradient(180deg, transparent, rgba(186,230,253,.72), transparent);
-      transform:rotate(18deg);
-      animation:rain linear infinite;
-      opacity:.32;
-    }
-    .particles span{
-      position:absolute;border-radius:50%;background:rgba(250,204,21,.6);
-      box-shadow:0 0 18px rgba(250,204,21,.35);
-      animation:float 8s ease-in-out infinite;
-    }
-
-    /* cards / sections */
-    .about-grid,.showcase-grid{display:grid;gap:20px}
-    .about-grid{grid-template-columns:.95fr 1.05fr;align-items:center}
-    .feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-    .card{
-      padding:26px;border-radius:28px;transition:.32s ease;position:relative;overflow:hidden
-    }
-    .card:hover{transform:translateY(-6px);border-color:rgba(250,204,21,.2)}
-    .card .line{
-      width:0;height:1px;background:var(--gold);margin-top:18px;transition:.5s ease
-    }
-    .card:hover .line{width:100%}
-    .card p{color:rgba(255,255,255,.66);line-height:1.7}
-    .card h3,.card h4{margin-top:14px;font-size:1.15rem}
-    .icon{
-      width:56px;height:56px;border-radius:18px;display:grid;place-items:center;
-      background:linear-gradient(135deg, rgba(250,204,21,.18), rgba(59,130,246,.08));
-      border:1px solid rgba(255,255,255,.08);
-      color:var(--gold);font-size:1.35rem;font-weight:800
-    }
-
-    .split-head{
-      display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:34px
-    }
-    .split-head p{max-width:620px;color:rgba(255,255,255,.62);line-height:1.8}
-    .gear-grid,.universe-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-
-    .showcase-grid{grid-template-columns:1.15fr .85fr}
-    .showcase-main{
-      min-height:430px;padding:34px;border-radius:32px;position:relative;overflow:hidden
-    }
-    .showcase-main::before{
-      content:"";position:absolute;inset:0;
+    .skyline {
+      position: absolute;
+      left: -5%; right: -5%; bottom: 0;
+      height: 230px;
       background:
-        radial-gradient(circle at 22% 32%, rgba(250,204,21,.12), transparent 18%),
-        linear-gradient(180deg, rgba(15,23,42,.15), rgba(2,6,23,.95));
+        linear-gradient(180deg, transparent, rgba(0,0,0,.3)),
+        repeating-linear-gradient(
+          to right,
+          #05070c 0 40px,
+          #0a0f17 40px 68px,
+          #08111c 68px 90px,
+          #05070c 90px 125px,
+          #0b1422 125px 150px
+        );
+      clip-path: polygon(0 100%, 0 46%, 5% 46%, 5% 28%, 10% 28%, 10% 58%, 16% 58%, 16% 18%, 21% 18%, 21% 38%, 25% 38%, 25% 22%, 30% 22%, 30% 52%, 36% 52%, 36% 10%, 42% 10%, 42% 44%, 47% 44%, 47% 18%, 54% 18%, 54% 60%, 60% 60%, 60% 30%, 66% 30%, 66% 12%, 73% 12%, 73% 42%, 79% 42%, 79% 26%, 84% 26%, 84% 54%, 90% 54%, 90% 18%, 96% 18%, 96% 100%);
+      opacity: .96;
     }
-    .showcase-main > *{position:relative;z-index:2}
-    .showcase-main p{max-width:540px;line-height:1.8;color:rgba(255,255,255,.65)}
-    .showcase-stack{display:grid;gap:18px}
-    .pill{
-      display:inline-flex;padding:6px 12px;border-radius:999px;
-      background:rgba(250,204,21,.12);color:var(--gold);
-      font-size:.7rem;text-transform:uppercase;letter-spacing:.32em
+    .bat-signal {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 66% 19%, rgba(255,213,74,0.14), transparent 19%);
+    }
+    .batman {
+      position: relative;
+      z-index: 3;
+      width: 330px;
+      height: 500px;
+      margin-top: 60px;
+    }
+    .cape {
+      position: absolute;
+      width: 310px;
+      height: 330px;
+      left: 10px;
+      top: 120px;
+      background: linear-gradient(180deg, rgba(18,23,34,.95), rgba(4,7,12,.98));
+      clip-path: polygon(50% 0%, 96% 16%, 88% 40%, 100% 100%, 72% 84%, 60% 100%, 50% 82%, 40% 100%, 28% 84%, 0% 100%, 12% 40%, 4% 16%);
+      filter: drop-shadow(0 20px 30px rgba(0,0,0,.4));
+      animation: capeWave 5s ease-in-out infinite;
+    }
+    @keyframes capeWave {
+      0%,100% { transform: rotate(0deg) translateY(0); }
+      50% { transform: rotate(-1.6deg) translateY(-8px); }
+    }
+    .body {
+      position: absolute;
+      width: 160px;
+      height: 260px;
+      left: 85px;
+      top: 134px;
+      border-radius: 90px 90px 34px 34px;
+      background: linear-gradient(180deg, #1b2230, #0d131d 60%, #090d14);
+      border: 1px solid rgba(255,255,255,.05);
+      z-index: 3;
+    }
+    .body::before {
+      content: "";
+      position: absolute;
+      width: 64px; height: 28px;
+      left: 48px; top: 76px;
+      background: var(--yellow);
+      clip-path: polygon(0 48%, 28% 48%, 40% 12%, 50% 48%, 60% 12%, 72% 48%, 100% 48%, 78% 72%, 58% 62%, 50% 86%, 42% 62%, 22% 72%);
+      box-shadow: 0 0 18px rgba(255,213,74,.22);
+    }
+    .head {
+      position: absolute;
+      width: 132px; height: 134px;
+      left: 99px; top: 32px;
+      background: linear-gradient(180deg, #1b2230, #0b1119);
+      clip-path: polygon(16% 100%, 16% 26%, 28% 0%, 40% 22%, 60% 22%, 72% 0%, 84% 26%, 84% 100%, 50% 92%);
+      border-radius: 30px;
+      z-index: 4;
+      box-shadow: var(--shadow);
+    }
+    .eye {
+      position: absolute;
+      width: 24px; height: 6px;
+      background: #8fd2ff;
+      top: 58px;
+      border-radius: 999px;
+      box-shadow: 0 0 14px rgba(125,196,255,.7);
+    }
+    .eye.left { left: 28px; transform: rotate(-7deg); }
+    .eye.right { right: 28px; transform: rotate(7deg); }
+    .belt {
+      position: absolute;
+      left: 28px; right: 28px; top: 146px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d6aa13, #ffda57);
+    }
+    .arm {
+      position: absolute;
+      width: 34px; height: 180px;
+      background: linear-gradient(180deg, #161e2b, #090e15);
+      border-radius: 40px;
+      top: 142px;
+      z-index: 2;
+    }
+    .arm.left { left: 62px; transform: rotate(14deg); }
+    .arm.right { right: 62px; transform: rotate(-14deg); }
+    .leg {
+      position: absolute;
+      width: 40px; height: 170px;
+      background: linear-gradient(180deg, #161e2b, #090e15);
+      border-radius: 40px;
+      top: 356px;
+      z-index: 2;
+    }
+    .leg.left { left: 118px; }
+    .leg.right { right: 118px; }
+    .boot {
+      position: absolute;
+      width: 62px; height: 24px;
+      bottom: -10px;
+      background: #070b10;
+      border-radius: 20px;
+    }
+    .boot.left { left: 104px; }
+    .boot.right { right: 104px; }
+    .floating-card {
+      position: absolute;
+      right: 0; bottom: 26px;
+      width: min(86%, 280px);
+      z-index: 4;
+    }
+    .stat-line {
+      display: flex; justify-content: space-between; gap: 14px;
+      color: var(--muted);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .stat-line strong { color: var(--text); }
+
+    .about, .features, .missions, .gadgets, .contact { padding: 84px 0 40px; }
+
+    .city-card {
+      min-height: 500px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 70% 20%, rgba(255,213,74,.08), transparent 18%),
+        linear-gradient(180deg, #0f1725 0%, #0a1019 100%);
+    }
+    .city-moon {
+      position: absolute;
+      width: 120px; height: 120px; border-radius: 50%;
+      top: 44px; right: 50px;
+      background: radial-gradient(circle, #ffe792 0%, #ffd34c 58%, #d79e00 100%);
+      box-shadow: 0 0 35px rgba(255,213,74,.2);
+    }
+    .city-buildings {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 210px;
+      background:
+        linear-gradient(180deg, transparent, rgba(0,0,0,.35)),
+        repeating-linear-gradient(to right, #0a1018 0 34px, #10192a 34px 58px, #0b1420 58px 86px, #08101a 86px 120px);
+      clip-path: polygon(0 100%, 0 50%, 8% 50%, 8% 18%, 13% 18%, 13% 40%, 18% 40%, 18% 26%, 25% 26%, 25% 60%, 32% 60%, 32% 12%, 38% 12%, 38% 44%, 43% 44%, 43% 22%, 50% 22%, 50% 56%, 57% 56%, 57% 30%, 63% 30%, 63% 15%, 70% 15%, 70% 48%, 77% 48%, 77% 20%, 84% 20%, 84% 58%, 92% 58%, 92% 34%, 100% 34%, 100% 100%);
+    }
+    .about-copy .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .stat-box {
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      text-align: center;
+    }
+    .stat-box strong {
+      display: block;
+      color: var(--yellow);
+      font-size: 1.9rem;
+      margin-bottom: 8px;
+    }
+    .stat-box span { color: var(--muted); font-weight: 700; }
+
+    .feature-icon, .gadget-icon {
+      width: 70px; height: 70px;
+      border-radius: 22px;
+      display: grid; place-items: center;
+      margin-bottom: 18px;
+      font-size: 1.9rem;
+      background: linear-gradient(135deg, rgba(255,213,74,.16), rgba(255,213,74,.04));
+      border: 1px solid rgba(255,213,74,.18);
+      color: var(--yellow);
+      box-shadow: 0 12px 28px rgba(255,193,27,.08);
+    }
+    .feature-card h3, .gadget-card h3, .mission-card h3 { margin-bottom: 10px; font-size: 1.28rem; }
+    .feature-card p, .gadget-card p, .mission-card p { color: var(--muted); }
+
+    .mission-card { min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; gap: 18px; }
+    .mission-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .mission-badge {
+      width: 62px; height: 62px; border-radius: 20px;
+      display: grid; place-items: center;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--yellow);
+      font-size: 1.4rem;
+      font-weight: 900;
+    }
+    .mission-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .mission-tags span {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: .9rem;
     }
 
-    .tag{
-      display:inline-flex;padding:6px 12px;border-radius:999px;font-size:.62rem;
-      text-transform:uppercase;letter-spacing:.26em
+    .contact-box {
+      border-radius: 40px;
+      padding: 40px;
+      background:
+        radial-gradient(circle at top right, rgba(255,213,74,.18), transparent 22%),
+        linear-gradient(135deg, #111926 0%, #0c111b 50%, #080b12 100%);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: var(--shadow-strong);
     }
-    .tag.good{background:rgba(16,185,129,.13);color:#86efac}
-    .tag.bad{background:rgba(244,63,94,.13);color:#fda4af}
+    .contact-grid { display: grid; grid-template-columns: 1fr .92fr; gap: 28px; align-items: center; }
+    .contact-copy h2 {
+      font-size: clamp(2rem, 4vw, 3.7rem);
+      line-height: 1.03;
+      margin: 14px 0 18px;
+    }
+    .contact-copy p { color: var(--muted); max-width: 640px; }
+    .contact-form {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 28px;
+      padding: 24px;
+    }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--text); }
+    .field input {
+      width: 100%; min-height: 54px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--text);
+    }
+    .field input::placeholder { color: #8d98af; }
+    .contact-note { margin-top: 10px; color: var(--muted); font-size: .88rem; }
 
-    footer{
-      border-top:1px solid rgba(255,255,255,.08);
-      padding:26px 0 40px;position:relative
+    .footer { padding: 24px 0 46px; }
+    .footer-box {
+      border-radius: 28px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      padding: 22px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
     }
-    footer::before{
-      content:"";position:absolute;inset:0;
-      background:linear-gradient(180deg, rgba(250,204,21,.04), transparent);
-      pointer-events:none
+    .footer-copy { color: var(--muted); font-weight: 700; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .footer-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-weight: 700;
     }
-    .footer-wrap{
-      display:flex;justify-content:space-between;gap:20px;align-items:center
-    }
-    .footer-wrap p{color:rgba(255,255,255,.56)}
+    .footer-links a:hover { color: var(--yellow); }
 
-    .reveal{
-      opacity:0;transform:translateY(26px);
-      transition:opacity .8s ease, transform .8s ease;
+    .back-top {
+      position: fixed;
+      right: 18px; bottom: 18px;
+      width: 56px; height: 56px;
+      border-radius: 18px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--yellow), var(--yellow-2));
+      color: #07090f;
+      font-size: 1.4rem;
+      box-shadow: 0 18px 40px rgba(255,193,27,.25);
+      opacity: 0; pointer-events: none; transform: translateY(12px);
+      transition: var(--tr);
+      z-index: 997;
     }
-    .reveal.show{opacity:1;transform:none}
+    .back-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
 
-    .bat-logo{
-      width:54px;height:54px;color:var(--gold);animation:pulseGlow 3s ease-in-out infinite;
-      filter:drop-shadow(0 0 14px rgba(250,204,21,.25));
-      flex:0 0 auto;
+    @media (max-width: 1100px) {
+      .hero-wrap, .grid-2, .contact-grid { grid-template-columns: 1fr; }
+      .hero-wrap { min-height: auto; }
+      .hero-visual { order: -1; min-height: 560px; }
     }
-    .bat-logo.small{width:42px;height:42px}
-    .bat-logo.large{width:96px;height:96px}
-
-    .scroll-hint{
-      position:absolute;left:50%;bottom:24px;transform:translateX(-50%);
-      color:rgba(255,255,255,.5);display:flex;flex-direction:column;align-items:center;gap:8px;
-      z-index:3
+    @media (max-width: 920px) {
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .nav-list, .header-cta { display: none; }
+      .menu-toggle { display: inline-block; }
+      .about-copy .stats { grid-template-columns: 1fr; }
     }
-    .scroll-hint span{font-size:.62rem;text-transform:uppercase;letter-spacing:.34em}
-    .chev{animation:bounce 1.5s infinite}
-
-    @keyframes radar{
-      0%{transform:translate(-50%,-50%) scale(.82);opacity:0}
-      40%{opacity:.18}
-      100%{transform:translate(-50%,-50%) scale(1.65);opacity:0}
+    @media (max-width: 680px) {
+      .container { width: min(100% - 20px, var(--max)); }
+      .header-inner { min-height: 74px; }
+      .hero-title { font-size: clamp(2.5rem, 12vw, 4.4rem); }
+      .hero-visual { min-height: 480px; }
+      .hero-frame { inset: 10px; border-radius: 28px; }
+      .moon { width: 120px; height: 120px; top: 28px; right: 28px; }
+      .batman { transform: scale(.82); }
+      .grid-3 { grid-template-columns: 1fr; }
+      .contact-box { padding: 26px 20px; border-radius: 28px; }
+      .card, .footer-box { padding: 22px; }
     }
-    @keyframes pulseGlow{
-      0%,100%{transform:translateY(0);filter:drop-shadow(0 0 10px rgba(250,204,21,.22))}
-      50%{transform:translateY(-4px);filter:drop-shadow(0 0 20px rgba(250,204,21,.55))}
-    }
-    @keyframes slide{
-      0%{transform:translateX(-140%)}
-      100%{transform:translateX(260%)}
-    }
-    @keyframes rain{
-      0%{transform:translateY(-20%) rotate(18deg);opacity:0}
-      15%{opacity:.9}
-      100%{transform:translateY(130vh) rotate(18deg);opacity:0}
-    }
-    @keyframes float{
-      0%,100%{transform:translateY(0) translateX(0);opacity:.25}
-      50%{transform:translateY(-22px) translateX(10px);opacity:.95}
-    }
-    @keyframes bounce{
-      0%,100%{transform:translateY(0)}
-      50%{transform:translateY(7px)}
-    }
-
-    @media (max-width: 1100px){
-      .hero .container,
-      .about-grid,
-      .showcase-grid{grid-template-columns:1fr}
-      .gear-grid,.universe-grid{grid-template-columns:repeat(2,1fr)}
-      .hero-panel{max-width:760px;margin:auto}
-      .split-head{align-items:start;flex-direction:column}
-    }
-    @media (max-width: 860px){
-      .nav-links{display:none}
-      .menu-btn{display:block}
-      .mobile-menu.show{display:block}
-      .feature-grid,.panel-grid,.stats{grid-template-columns:repeat(2,1fr)}
-      .section{padding:84px 0}
-    }
-    @media (max-width: 640px){
-      .hero{padding-top:120px}
-      .badge{font-size:.6rem;letter-spacing:.26em}
-      .hero-actions{flex-direction:column}
-      .btn{width:100%}
-      .feature-grid,.gear-grid,.universe-grid,.stats{grid-template-columns:1fr}
-      .footer-wrap{flex-direction:column;align-items:flex-start}
-      .showcase-main{min-height:380px}
-      .nav,.mobile-menu{width:min(1200px, calc(100vw - 22px))}
+    @media (max-width: 420px) {
+      .hero-actions { flex-direction: column; }
+      .btn { width: 100%; }
+      .footer-box { justify-content: center; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <div class="loader" id="loader">
-    <div class="loader-inner">
-      <div class="loader-rings">
-        <span class="ring"></span>
-        <span class="ring"></span>
-        <span class="ring"></span>
-        <svg class="bat-logo large" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
-          <path d="M437.6 202.4c-19.8-4.7-31.8-20.6-41.5-37.8-12.3-21.8-26.2-41.5-49-53-20.8-10.5-42.6-7.1-63.5 2-8.7 3.8-17.1 8.3-25.7 12.5-1.4.7-3 1.1-5.8 2.1-2.9-12.6-5.2-24.2-8.2-35.7-3.4-12.8-8.4-25-18.4-34.4-10 9.3-15 21.5-18.4 34.4-3 11.5-5.3 23.2-8.2 35.7-2.8-1-4.4-1.4-5.8-2.1-8.6-4.2-17-8.8-25.7-12.5-20.8-9-42.7-12.5-63.5-2-22.8 11.5-36.7 31.2-49 53-9.7 17.2-21.7 33.1-41.5 37.8-3.6.9-7 2.6-11.6 4.4 7.3 5.7 14.1 9.2 18.5 14.7 12.2 15.2 27.6 24.9 45.5 31.8 18.6 7.2 38.1 9.7 57.7 11.2 7.9.6 15.8 1.4 24.5 2.2 0 11.1-1.3 21.6.3 31.6 3.6 22.7 18.6 35.4 40.2 38 18.1 2.2 35.1-2.1 49.7-13.2 2.9-2.2 5.8-4.4 9.4-7.1 3.6 2.6 6.5 4.9 9.4 7.1 14.6 11.1 31.6 15.4 49.7 13.2 21.6-2.6 36.6-15.3 40.2-38 1.6-10 .3-20.5.3-31.6 8.8-.8 16.6-1.6 24.5-2.2 19.6-1.5 39.1-4 57.7-11.2 17.9-6.9 33.4-16.6 45.5-31.8 4.4-5.5 11.2-9 18.5-14.7-4.6-1.8-8-3.5-11.6-4.4z"/>
-        </svg>
-      </div>
-      <p>Inicializando vigilância de Gotham</p>
-      <div class="progress"><span></span></div>
-    </div>
-  </div>
+  <div class="rain"></div>
+  <div class="glow one"></div>
+  <div class="glow two"></div>
 
-  <header>
-    <nav class="nav glass">
-      <a href="#inicio" class="brand">
-        <svg class="bat-logo small" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
-          <path d="M437.6 202.4c-19.8-4.7-31.8-20.6-41.5-37.8-12.3-21.8-26.2-41.5-49-53-20.8-10.5-42.6-7.1-63.5 2-8.7 3.8-17.1 8.3-25.7 12.5-1.4.7-3 1.1-5.8 2.1-2.9-12.6-5.2-24.2-8.2-35.7-3.4-12.8-8.4-25-18.4-34.4-10 9.3-15 21.5-18.4 34.4-3 11.5-5.3 23.2-8.2 35.7-2.8-1-4.4-1.4-5.8-2.1-8.6-4.2-17-8.8-25.7-12.5-20.8-9-42.7-12.5-63.5-2-22.8 11.5-36.7 31.2-49 53-9.7 17.2-21.7 33.1-41.5 37.8-3.6.9-7 2.6-11.6 4.4 7.3 5.7 14.1 9.2 18.5 14.7 12.2 15.2 27.6 24.9 45.5 31.8 18.6 7.2 38.1 9.7 57.7 11.2 7.9.6 15.8 1.4 24.5 2.2 0 11.1-1.3 21.6.3 31.6 3.6 22.7 18.6 35.4 40.2 38 18.1 2.2 35.1-2.1 49.7-13.2 2.9-2.2 5.8-4.4 9.4-7.1 3.6 2.6 6.5 4.9 9.4 7.1 14.6 11.1 31.6 15.4 49.7 13.2 21.6-2.6 36.6-15.3 40.2-38 1.6-10 .3-20.5.3-31.6 8.8-.8 16.6-1.6 24.5-2.2 19.6-1.5 39.1-4 57.7-11.2 17.9-6.9 33.4-16.6 45.5-31.8 4.4-5.5 11.2-9 18.5-14.7-4.6-1.8-8-3.5-11.6-4.4z"/>
-        </svg>
-        <div class="brand-text">
-          <strong>Batman</strong>
-          <span>Gotham Protocol</span>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="logo" aria-label="Ir para o início">
+        <div class="logo-badge">🦇</div>
+        <div class="logo-text">
+          <span class="small">gotham premium</span>
+          <span class="big">Batman Landing Page</span>
         </div>
       </a>
 
-      <div class="nav-links" id="navLinks">
-        <a href="#inicio" class="active">Início</a>
-        <a href="#sobre">Batman</a>
-        <a href="#equipamentos">Equipamentos</a>
-        <a href="#gotham">Gotham</a>
-        <a href="#universo">Aliados & Vilões</a>
-      </div>
-
-      <button class="menu-btn" id="menuBtn">☰</button>
-    </nav>
-
-    <div class="mobile-menu glass" id="mobileMenu">
-      <a href="#inicio">Início</a>
-      <a href="#sobre">Batman</a>
-      <a href="#equipamentos">Equipamentos</a>
-      <a href="#gotham">Gotham</a>
-      <a href="#universo">Aliados & Vilões</a>
+      <nav class="nav" aria-label="Navegação principal">
+        <div class="nav-list">
+          <a href="#sobre">Sobre</a>
+          <a href="#destaques">Destaques</a>
+          <a href="#missoes">Missões</a>
+          <a href="#gadgets">Gadgets</a>
+          <a href="#contato">Contato</a>
+        </div>
+        <a href="#contato" class="btn btn-primary header-cta">Ativar sinal</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu"><span></span></button>
+      </nav>
     </div>
   </header>
 
-  <section class="hero grid-bg" id="inicio">
-    <div class="hero-effects">
-      <div class="rain" id="rain"></div>
-      <div class="particles" id="particles"></div>
-      <div class="city" id="city"></div>
-    </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <a href="#sobre">Sobre</a>
+    <a href="#destaques">Destaques</a>
+    <a href="#missoes">Missões</a>
+    <a href="#gadgets">Gadgets</a>
+    <a href="#contato">Contato</a>
+  </div>
 
-    <div class="container">
-      <div class="reveal">
-        <div class="badge"><span class="dot"></span> Vigilante. Estratégico. Lendário.</div>
-        <h1>O Guardião de <span>Gotham</span></h1>
-        <p class="subtitle">
-          Uma experiência cinematográfica, sombria e tecnológica inspirada no universo do Batman.
-          Design premium, atmosfera imersiva e energia de uma Gotham futurista em cada detalhe.
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div class="hero-content">
+          <div class="tag">🌙 HTML, CSS e JavaScript puro</div>
+          <h1 class="hero-title">
+            A noite pertence ao
+            <span>Batman</span>
+          </h1>
+          <p class="hero-text">
+            Uma landing page cinematográfica, escura, tecnológica e responsiva inspirada em Gotham City. O visual mistura vidro fosco, luz dourada, chuva, skyline urbano e um herói central com presença premium.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#missoes" class="btn btn-primary">Ver missões</a>
+            <a href="#gadgets" class="btn btn-secondary">Explorar gadgets</a>
+          </div>
+
+          <div class="hero-pills">
+            <div class="pill">🦇 visual premium</div>
+            <div class="pill">🌃 clima Gotham</div>
+            <div class="pill">📱 100% responsivo</div>
+            <div class="pill">⚡ sem bibliotecas</div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-frame">
+            <div class="moon"></div>
+            <div class="bat-signal"></div>
+            <div class="skyline"></div>
+          </div>
+
+          <div class="batman" aria-hidden="true">
+            <div class="cape"></div>
+            <div class="head">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+            </div>
+            <div class="arm left"></div>
+            <div class="arm right"></div>
+            <div class="body">
+              <div class="belt"></div>
+            </div>
+            <div class="leg left"></div>
+            <div class="leg right"></div>
+            <div class="boot left"></div>
+            <div class="boot right"></div>
+          </div>
+
+          <div class="card floating-card">
+            <div class="tag">status de gotham</div>
+            <h3 style="margin: 16px 0 10px; font-size: 1.25rem;">Central do Morcego</h3>
+            <div class="stat-line"><span>Vigilância</span><strong>Ativa</strong></div>
+            <div class="stat-line"><span>Bat-sinal</span><strong>Online</strong></div>
+            <div class="stat-line" style="border-bottom: 0;"><span>Nível de ameaça</span><strong>Alto</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="sobre">
+      <div class="container grid-2" style="align-items:center;">
+        <article class="card city-card">
+          <div class="city-moon"></div>
+          <div class="city-buildings"></div>
+        </article>
+
+        <div class="about-copy">
+          <div class="tag">🦇 sobre o projeto</div>
+          <h2 class="section-title">Uma página com presença de herói e clima de cinema</h2>
+          <p class="section-text">
+            O conceito desta página é transmitir força, mistério e sofisticação. Ela foi pensada para funcionar como portfólio, apresentação temática ou landing page criativa, mantendo um visual marcante tanto no desktop quanto no celular.
+          </p>
+
+          <div class="stats">
+            <div class="stat-box">
+              <strong>100%</strong>
+              <span>responsiva</span>
+            </div>
+            <div class="stat-box">
+              <strong>0</strong>
+              <span>dependências</span>
+            </div>
+            <div class="stat-box">
+              <strong>∞</strong>
+              <span>estilo Gotham</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="destaques">
+      <div class="container">
+        <div class="tag">✨ destaques</div>
+        <h2 class="section-title">Detalhes que deixam a página mais impactante</h2>
+        <p class="section-text">
+          A composição foi feita para parecer mais sofisticada, com profundidade, contraste forte e sensação de tecnologia, sem perder performance.
         </p>
 
-        <div class="hero-actions">
-          <a href="#equipamentos" class="btn primary">Explorar Arsenal →</a>
-          <a href="#sobre" class="btn secondary">Conhecer a Lenda</a>
-        </div>
+        <div class="grid-3" style="margin-top: 32px;">
+          <article class="card feature-card">
+            <div class="feature-icon">🌙</div>
+            <h3>Hero cinematográfico</h3>
+            <p>Uma abertura forte com lua, skyline e personagem central para causar impacto já no primeiro olhar.</p>
+          </article>
 
-        <div class="stats">
-          <div class="stat glass"><strong>+120</strong><span>Missões</span></div>
-          <div class="stat glass"><strong>24/7</strong><span>Vigilância</span></div>
-          <div class="stat glass"><strong>100%</strong><span>Foco</span></div>
-          <div class="stat glass"><strong>∞</strong><span>Determinação</span></div>
-        </div>
-      </div>
+          <article class="card feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Efeitos visuais</h3>
+            <p>Chuva, brilhos, sombras profundas e vidro fosco ajudam a criar uma atmosfera moderna e noturna.</p>
+          </article>
 
-      <div class="hero-panel glass reveal">
-        <div class="panel-top">
-          <div>
-            <p>Monitor Central</p>
-            <h3>Batman Interface</h3>
-          </div>
-          <svg class="bat-logo" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
-            <path d="M437.6 202.4c-19.8-4.7-31.8-20.6-41.5-37.8-12.3-21.8-26.2-41.5-49-53-20.8-10.5-42.6-7.1-63.5 2-8.7 3.8-17.1 8.3-25.7 12.5-1.4.7-3 1.1-5.8 2.1-2.9-12.6-5.2-24.2-8.2-35.7-3.4-12.8-8.4-25-18.4-34.4-10 9.3-15 21.5-18.4 34.4-3 11.5-5.3 23.2-8.2 35.7-2.8-1-4.4-1.4-5.8-2.1-8.6-4.2-17-8.8-25.7-12.5-20.8-9-42.7-12.5-63.5-2-22.8 11.5-36.7 31.2-49 53-9.7 17.2-21.7 33.1-41.5 37.8-3.6.9-7 2.6-11.6 4.4 7.3 5.7 14.1 9.2 18.5 14.7 12.2 15.2 27.6 24.9 45.5 31.8 18.6 7.2 38.1 9.7 57.7 11.2 7.9.6 15.8 1.4 24.5 2.2 0 11.1-1.3 21.6.3 31.6 3.6 22.7 18.6 35.4 40.2 38 18.1 2.2 35.1-2.1 49.7-13.2 2.9-2.2 5.8-4.4 9.4-7.1 3.6 2.6 6.5 4.9 9.4 7.1 14.6 11.1 31.6 15.4 49.7 13.2 21.6-2.6 36.6-15.3 40.2-38 1.6-10 .3-20.5.3-31.6 8.8-.8 16.6-1.6 24.5-2.2 19.6-1.5 39.1-4 57.7-11.2 17.9-6.9 33.4-16.6 45.5-31.8 4.4-5.5 11.2-9 18.5-14.7-4.6-1.8-8-3.5-11.6-4.4z"/>
-          </svg>
-        </div>
-
-        <div class="panel-grid">
-          <div class="box">
-            <div class="small">Status</div>
-            <strong style="color:var(--gold)">Ativo</strong>
-            <div class="statusbar"><span></span></div>
-          </div>
-          <div class="box">
-            <div class="small">Zona</div>
-            <strong>Gotham</strong>
-            <div style="margin-top:10px;color:rgba(255,255,255,.56);font-size:.95rem">Patrulha noturna em alta prioridade.</div>
-          </div>
-        </div>
-
-        <div class="radar">
-          <div class="radar-head">
-            <div class="small" style="text-transform:uppercase;letter-spacing:.25em;color:rgba(255,255,255,.42)">Radar Urbano</div>
-            <span class="online">Online</span>
-          </div>
-          <div class="radar-screen">
-            <div class="cross-h"></div>
-            <div class="cross-v"></div>
-            <span class="blip b1"></span>
-            <span class="blip b2"></span>
-            <span class="blip b3"></span>
-          </div>
+          <article class="card feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Layout responsivo</h3>
+            <p>Estrutura pensada para desktop, tablet e celular, preservando a estética premium em qualquer tela.</p>
+          </article>
         </div>
       </div>
-    </div>
+    </section>
 
-    <a href="#sobre" class="scroll-hint">
-      <span>Scroll</span>
-      <div class="chev">⌄</div>
-    </a>
-  </section>
-
-  <section class="section" id="sobre">
-    <div class="container">
-      <div class="gold-line"></div>
-      <div class="about-grid">
-        <div class="glass card reveal">
-          <div style="position:absolute;right:24px;top:20px;opacity:.10">
-            <svg class="bat-logo large" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
-              <path d="M437.6 202.4c-19.8-4.7-31.8-20.6-41.5-37.8-12.3-21.8-26.2-41.5-49-53-20.8-10.5-42.6-7.1-63.5 2-8.7 3.8-17.1 8.3-25.7 12.5-1.4.7-3 1.1-5.8 2.1-2.9-12.6-5.2-24.2-8.2-35.7-3.4-12.8-8.4-25-18.4-34.4-10 9.3-15 21.5-18.4 34.4-3 11.5-5.3 23.2-8.2 35.7-2.8-1-4.4-1.4-5.8-2.1-8.6-4.2-17-8.8-25.7-12.5-20.8-9-42.7-12.5-63.5-2-22.8 11.5-36.7 31.2-49 53-9.7 17.2-21.7 33.1-41.5 37.8-3.6.9-7 2.6-11.6 4.4 7.3 5.7 14.1 9.2 18.5 14.7 12.2 15.2 27.6 24.9 45.5 31.8 18.6 7.2 38.1 9.7 57.7 11.2 7.9.6 15.8 1.4 24.5 2.2 0 11.1-1.3 21.6.3 31.6 3.6 22.7 18.6 35.4 40.2 38 18.1 2.2 35.1-2.1 49.7-13.2 2.9-2.2 5.8-4.4 9.4-7.1 3.6 2.6 6.5 4.9 9.4 7.1 14.6 11.1 31.6 15.4 49.7 13.2 21.6-2.6 36.6-15.3 40.2-38 1.6-10 .3-20.5.3-31.6 8.8-.8 16.6-1.6 24.5-2.2 19.6-1.5 39.1-4 57.7-11.2 17.9-6.9 33.4-16.6 45.5-31.8 4.4-5.5 11.2-9 18.5-14.7-4.6-1.8-8-3.5-11.6-4.4z"/>
-            </svg>
-          </div>
-          <div class="eyebrow">A Lenda</div>
-          <h2 style="margin-top:14px">Mais que um herói.<br>Um símbolo.</h2>
-          <p style="margin-top:22px">
-            Batman representa disciplina, inteligência e presença. Em uma cidade consumida por crime e escuridão,
-            ele transforma medo em estratégia e tecnologia em justiça. Sua identidade visual mistura brutalidade urbana,
-            refinamento tático e imponência silenciosa.
-          </p>
-          <p style="margin-top:16px;color:rgba(255,255,255,.6)">
-            Esta landing page traduz essa essência em uma interface premium: sombras profundas, brilhos dourados,
-            elementos translúcidos, movimento cinematográfico e uma atmosfera de Gotham moldada para impressionar em qualquer tela.
-          </p>
-        </div>
-
-        <div class="feature-grid reveal">
-          <div class="glass card">
-            <div class="icon">◆</div>
-            <h3>Arquitetura Visual</h3>
-            <p>Glassmorphism, neon sutil e contraste cinematográfico com acabamento sofisticado.</p>
-            <div class="line"></div>
-          </div>
-          <div class="glass card">
-            <div class="icon">▣</div>
-            <h3>Experiência Responsiva</h3>
-            <p>Layout adaptado para desktop, tablet e celular com fluidez e presença premium.</p>
-            <div class="line"></div>
-          </div>
-          <div class="glass card">
-            <div class="icon">✦</div>
-            <h3>Microinterações</h3>
-            <p>Hover elegante, transições suaves e feedback visual refinado em cada bloco.</p>
-            <div class="line"></div>
-          </div>
-          <div class="glass card">
-            <div class="icon">◉</div>
-            <h3>Atmosfera Gotham</h3>
-            <p>Chuva, skyline, luzes e densidade visual com estética dark e tecnológica.</p>
-            <div class="line"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="equipamentos">
-    <div class="container">
-      <div class="gold-line"></div>
-      <div class="split-head reveal">
-        <div>
-          <div class="eyebrow">Arsenal</div>
-          <h2 style="margin-top:12px">Habilidades & Equipamentos</h2>
-        </div>
-        <p>
-          Cada recurso foi desenhado para dominar a noite: engenharia tática, inteligência de combate
-          e um repertório tecnológico digno da elite de Gotham.
+    <section class="missions" id="missoes">
+      <div class="container">
+        <div class="tag">🛡️ missões</div>
+        <h2 class="section-title">Ações prioritárias em Gotham</h2>
+        <p class="section-text">
+          Uma seção ideal para cards temáticos, portfólio, cases, funcionalidades ou blocos de conteúdo com personalidade forte.
         </p>
-      </div>
 
-      <div class="gear-grid">
-        <div class="glass card reveal">
-          <div class="icon">🛡</div>
-          <h3>Batsuit Tático</h3>
-          <p>Blindagem avançada, mobilidade precisa e presença intimidadora para missões urbanas de alto risco.</p>
-        </div>
-        <div class="glass card reveal">
-          <div class="icon">🚘</div>
-          <h3>Batmóvel</h3>
-          <p>Potência brutal, design militar e tecnologia furtiva para perseguições em Gotham City.</p>
-        </div>
-        <div class="glass card reveal">
-          <div class="icon">⌁</div>
-          <h3>Batcomputador</h3>
-          <p>Inteligência analítica, rastreamento em tempo real e vigilância estratégica da cidade.</p>
-        </div>
-        <div class="glass card reveal">
-          <div class="icon">⚡</div>
-          <h3>Gadgets de Campo</h3>
-          <p>Batarangs, gancho retrátil, EMPs e ferramentas desenvolvidas para domínio total do ambiente.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+        <div class="grid-3" style="margin-top: 34px;">
+          <article class="card mission-card">
+            <div class="mission-head">
+              <div>
+                <h3>Patrulha noturna</h3>
+                <p style="color: var(--muted);">Monitoramento dos pontos críticos da cidade.</p>
+              </div>
+              <div class="mission-badge">01</div>
+            </div>
+            <p>Ideal para representar um serviço principal, uma funcionalidade de destaque ou uma seção importante do projeto.</p>
+            <div class="mission-tags">
+              <span>vigilância</span>
+              <span>mobilidade</span>
+              <span>ação rápida</span>
+            </div>
+          </article>
 
-  <section class="section" id="gotham">
-    <div class="container">
-      <div class="gold-line"></div>
-      <div class="reveal">
-        <div class="eyebrow">Visual Showcase</div>
-        <h2 style="margin-top:12px">Gotham em Destaque</h2>
-      </div>
+          <article class="card mission-card">
+            <div class="mission-head">
+              <div>
+                <h3>Resposta imediata</h3>
+                <p style="color: var(--muted);">Acionamento tático sob alta ameaça.</p>
+              </div>
+              <div class="mission-badge">02</div>
+            </div>
+            <p>Perfeito para apresentar uma segunda solução, um recurso premium ou um diferencial estratégico do seu site.</p>
+            <div class="mission-tags">
+              <span>estratégia</span>
+              <span>velocidade</span>
+              <span>controle</span>
+            </div>
+          </article>
 
-      <div class="showcase-grid" style="margin-top:34px">
-        <div class="showcase-main glass reveal">
-          <div class="pill">Cidade Noturna</div>
-          <h2 style="font-size:clamp(2rem,4vw,3.7rem);margin-top:18px;max-width:760px">
-            Uma metrópole moldada por sombras, chuva e luz.
-          </h2>
-          <p style="margin-top:18px">
-            Gotham é fria, densa e viva. Os reflexos dourados atravessam a neblina enquanto arranha-céus observam cada movimento.
-            O clima visual combina mistério, grandiosidade e tensão silenciosa.
-          </p>
-          <div class="city" style="height:260px;opacity:.8" id="cityInner"></div>
-        </div>
-
-        <div class="showcase-stack">
-          <div class="glass card reveal">
-            <h4>Batmóvel</h4>
-            <p style="margin-top:12px">Máquina brutal de perseguição com presença intimidadora e design futurista.</p>
-          </div>
-          <div class="glass card reveal">
-            <h4>Batsuit</h4>
-            <p style="margin-top:12px">Armadura elegante com silhueta icônica, textura premium e propósito tático.</p>
-          </div>
-          <div class="glass card reveal">
-            <h4>Batcaverna</h4>
-            <p style="margin-top:12px">Centro de comando subterrâneo com monitores, veículos e engenharia avançada.</p>
-          </div>
+          <article class="card mission-card">
+            <div class="mission-head">
+              <div>
+                <h3>Defesa de Gotham</h3>
+                <p style="color: var(--muted);">Proteção contínua com tecnologia de ponta.</p>
+              </div>
+              <div class="mission-badge">03</div>
+            </div>
+            <p>Ótimo espaço para destacar confiabilidade, segurança, suporte ou qualquer bloco forte do seu projeto.</p>
+            <div class="mission-tags">
+              <span>segurança</span>
+              <span>análise</span>
+              <span>precisão</span>
+            </div>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section" id="universo">
-    <div class="container">
-      <div class="gold-line"></div>
-      <div class="split-head reveal">
-        <div>
-          <div class="eyebrow">Universo</div>
-          <h2 style="margin-top:12px">Aliados & Vilões</h2>
-        </div>
-        <p>
-          Nenhuma lenda existe sozinha. O universo do Batman é construído por alianças estratégicas
-          e antagonistas memoráveis que tornam Gotham ainda mais intensa.
+    <section class="gadgets" id="gadgets">
+      <div class="container">
+        <div class="tag">🧰 gadgets</div>
+        <h2 class="section-title">Tecnologia, utilidade e presença visual</h2>
+        <p class="section-text">
+          Esses cards podem servir para mostrar ferramentas, serviços, produtos, diferenciais ou recursos especiais do seu projeto.
         </p>
-      </div>
 
-      <div class="universe-grid">
-        <div class="glass card reveal">
-          <div style="display:flex;justify-content:space-between;gap:14px;align-items:center">
-            <div class="icon">A</div>
-            <span class="tag good">Aliado</span>
-          </div>
-          <h3>Alfred Pennyworth</h3>
-          <p>Estratégia, apoio e lealdade absoluta na fundação do Cavaleiro das Trevas.</p>
-        </div>
+        <div class="grid-3" style="margin-top: 32px;">
+          <article class="card gadget-card">
+            <div class="gadget-icon">🚘</div>
+            <h3>Batmóvel</h3>
+            <p>Representa velocidade, força e mobilidade. Pode virar um bloco de apresentação de produto ou feature principal.</p>
+          </article>
 
-        <div class="glass card reveal">
-          <div style="display:flex;justify-content:space-between;gap:14px;align-items:center">
-            <div class="icon">R</div>
-            <span class="tag good">Aliado</span>
-          </div>
-          <h3>Robin</h3>
-          <p>Agilidade, coragem e parceria em campo nas missões mais arriscadas.</p>
-        </div>
+          <article class="card gadget-card">
+            <div class="gadget-icon">🛰️</div>
+            <h3>Batcomputador</h3>
+            <p>Simboliza inteligência, monitoramento e análise. Excelente para dados, dashboards ou serviços digitais.</p>
+          </article>
 
-        <div class="glass card reveal">
-          <div style="display:flex;justify-content:space-between;gap:14px;align-items:center">
-            <div class="icon">J</div>
-            <span class="tag bad">Vilão</span>
-          </div>
-          <h3>Coringa</h3>
-          <p>Caos puro, mente imprevisível e o reflexo mais sombrio da ordem em Gotham.</p>
-        </div>
-
-        <div class="glass card reveal">
-          <div style="display:flex;justify-content:space-between;gap:14px;align-items:center">
-            <div class="icon">P</div>
-            <span class="tag bad">Vilão</span>
-          </div>
-          <h3>Pinguim</h3>
-          <p>Poder, influência e controle do submundo em uma cidade construída sobre sombras.</p>
+          <article class="card gadget-card">
+            <div class="gadget-icon">🪃</div>
+            <h3>Batarang</h3>
+            <p>Um ícone de precisão e agilidade. Funciona bem para destacar soluções rápidas, práticas e elegantes.</p>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    <div class="container footer-wrap">
-      <div style="display:flex;align-items:center;gap:12px">
-        <svg class="bat-logo small" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true">
-          <path d="M437.6 202.4c-19.8-4.7-31.8-20.6-41.5-37.8-12.3-21.8-26.2-41.5-49-53-20.8-10.5-42.6-7.1-63.5 2-8.7 3.8-17.1 8.3-25.7 12.5-1.4.7-3 1.1-5.8 2.1-2.9-12.6-5.2-24.2-8.2-35.7-3.4-12.8-8.4-25-18.4-34.4-10 9.3-15 21.5-18.4 34.4-3 11.5-5.3 23.2-8.2 35.7-2.8-1-4.4-1.4-5.8-2.1-8.6-4.2-17-8.8-25.7-12.5-20.8-9-42.7-12.5-63.5-2-22.8 11.5-36.7 31.2-49 53-9.7 17.2-21.7 33.1-41.5 37.8-3.6.9-7 2.6-11.6 4.4 7.3 5.7 14.1 9.2 18.5 14.7 12.2 15.2 27.6 24.9 45.5 31.8 18.6 7.2 38.1 9.7 57.7 11.2 7.9.6 15.8 1.4 24.5 2.2 0 11.1-1.3 21.6.3 31.6 3.6 22.7 18.6 35.4 40.2 38 18.1 2.2 35.1-2.1 49.7-13.2 2.9-2.2 5.8-4.4 9.4-7.1 3.6 2.6 6.5 4.9 9.4 7.1 14.6 11.1 31.6 15.4 49.7 13.2 21.6-2.6 36.6-15.3 40.2-38 1.6-10 .3-20.5.3-31.6 8.8-.8 16.6-1.6 24.5-2.2 19.6-1.5 39.1-4 57.7-11.2 17.9-6.9 33.4-16.6 45.5-31.8 4.4-5.5 11.2-9 18.5-14.7-4.6-1.8-8-3.5-11.6-4.4z"/>
-        </svg>
-        <div>
-          <div style="font-weight:700;text-transform:uppercase;letter-spacing:.28em">Batman</div>
-          <div style="font-size:.72rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.24em">Premium Landing Experience</div>
+    <section class="contact" id="contato">
+      <div class="container">
+        <div class="contact-box">
+          <div class="contact-grid">
+            <div class="contact-copy">
+              <div class="tag">📡 contato</div>
+              <h2>Ative o bat-sinal e leve esse visual para o seu projeto</h2>
+              <p>
+                Essa seção final pode ser usada como formulário, CTA comercial, convite para portfólio ou área de conversão. O visual fecha a experiência com a mesma identidade escura e elegante do restante da página.
+              </p>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+              <div class="field">
+                <label for="nome">Nome</label>
+                <input id="nome" type="text" placeholder="Digite seu nome" />
+              </div>
+              <div class="field">
+                <label for="email">E-mail</label>
+                <input id="email" type="email" placeholder="Digite seu e-mail" />
+              </div>
+              <button class="btn btn-primary" type="submit" style="width:100%;">Enviar sinal</button>
+              <p class="contact-note">Exemplo de interação em JavaScript puro.</p>
+            </form>
+          </div>
         </div>
       </div>
-      <p>Uma interface dark, responsiva e cinematográfica inspirada no universo de Gotham City.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-box">
+      <p class="footer-copy">🦇 Batman Premium Landing Page • HTML, CSS e JavaScript puro</p>
+      <div class="footer-links">
+        <a href="#home">Início</a>
+        <a href="#missoes">Missões</a>
+        <a href="#gadgets">Gadgets</a>
+      </div>
     </div>
   </footer>
 
+  <a href="#home" class="back-top" id="backTop" aria-label="Voltar ao topo">↑</a>
+
   <script>
-    const loader = document.getElementById('loader');
-    setTimeout(() => loader.classList.add('hidden'), 1700);
+    const menuToggle = document.getElementById('menuToggle');
+    const mobilePanel = document.getElementById('mobilePanel');
+    const backTop = document.getElementById('backTop');
+    const contactForm = document.getElementById('contactForm');
 
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('show');
-      menuBtn.textContent = mobileMenu.classList.contains('show') ? '✕' : '☰';
+    menuToggle.addEventListener('click', () => {
+      mobilePanel.classList.toggle('active');
     });
 
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        mobileMenu.classList.remove('show');
-        menuBtn.textContent = '☰';
-      });
+    mobilePanel.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobilePanel.classList.remove('active'));
     });
 
-    function buildRain(){
-      const rain = document.getElementById('rain');
-      for(let i=0;i<90;i++){
-        const d=document.createElement('span');
-        d.style.left = ((i * 7.91) % 100) + '%';
-        d.style.animationDuration = (1 + (i % 4) * .23) + 's';
-        d.style.animationDelay = ((i % 10) * .11) + 's';
-        rain.appendChild(d);
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 260) {
+        backTop.classList.add('show');
+      } else {
+        backTop.classList.remove('show');
       }
-    }
+    });
 
-    function buildParticles(){
-      const wrap = document.getElementById('particles');
-      for(let i=0;i<22;i++){
-        const p=document.createElement('span');
-        const s = 4 + (i % 3) * 2;
-        p.style.width = s + 'px';
-        p.style.height = s + 'px';
-        p.style.left = ((i * 13) % 100) + '%';
-        p.style.top = ((i * 17) % 100) + '%';
-        p.style.animationDelay = (i * .26) + 's';
-        wrap.appendChild(p);
-      }
-    }
-
-    function buildCity(id){
-      const target = document.getElementById(id);
-      const specs = [
-        [90,240,2],[72,180,11],[110,300,18],[95,210,31],[120,340,40],[80,190,54],[110,280,62],[75,220,76],[105,320,84]
-      ];
-      specs.forEach(([w,h,left])=>{
-        const b=document.createElement('div');
-        b.className='building';
-        b.style.width=w+'px';
-        b.style.height=h+'px';
-        b.style.left=left+'%';
-        const windows=document.createElement('div');
-        windows.className='windows';
-        for(let i=0;i<24;i++){
-          const win=document.createElement('span');
-          windows.appendChild(win);
-        }
-        b.appendChild(windows);
-        target.appendChild(b);
-      });
-    }
-
-    buildRain();
-    buildParticles();
-    buildCity('city');
-    buildCity('cityInner');
-
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting) entry.target.classList.add('show');
-      });
-    }, {threshold:.16});
-    reveals.forEach(el => observer.observe(el));
-
-    const sections = document.querySelectorAll('section[id]');
-    const navAnchors = document.querySelectorAll('.nav-links a');
-    const syncActive = () => {
-      let current = 'inicio';
-      sections.forEach(sec => {
-        const top = sec.offsetTop - 140;
-        if(window.scrollY >= top) current = sec.id;
-      });
-      navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
-    };
-    window.addEventListener('scroll', syncActive);
-    syncActive();
+    contactForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const nome = document.getElementById('nome').value.trim();
+      alert(nome ? `Bat-sinal enviado, ${nome}.` : 'Bat-sinal enviado com sucesso.');
+      contactForm.reset();
+    });
   </script>
 </body>
 </html>
